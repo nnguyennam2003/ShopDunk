@@ -18,7 +18,7 @@ export const getUserByEmail = async (email) => {
 
 // Lấy danh sách users
 export const getUsersFromDB = async () => {
-    const result = await db.query("SELECT * FROM users");
+    const result = await db.query("SELECT id, full_name, email, phone, gender, birthday, role FROM users");
     return result.rows;
 };
 

@@ -23,7 +23,7 @@ export const signup = async (req, res) => {
 
         const result = await createUserFromDB(email, phone, fullName, gender, birthday, hashedPassword);
 
-        const userId = result.insertId;
+        const userId = result.id;
 
         const accessToken = generateAccessToken(userId, "user", res);
         generateRefreshToken(userId, "user", res);

@@ -59,7 +59,7 @@ export const removeUser = async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json({ message: 'User deleted successfully' });
+        res.status(200).json({id, message: 'User deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Failed to delete user', error: error.message });
     }
@@ -70,7 +70,7 @@ export const getMe = async (req, res) => {
         const user = await getUserByIdFromDB(req.user.userId)
         if (!user) return res.status(404).json({ message: "User not found" })
 
-        res.status(200).json({ user })
+        res.status(200).json({ user: { id: user.id, email: user.email, phone: user.phone, fullName: user.full_name, gender: user.gender, birthday: user.birthday, role: user.role } })
     } catch (err) {
         res.status(500).json({ message: 'Failed to fetch user info', error: err.message })
     }

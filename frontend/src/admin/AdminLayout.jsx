@@ -6,7 +6,6 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
 
 export default function AdminLayout() {
-    console.log("AdminLayout rendered")
     return (
         <>
             <SidebarProvider>

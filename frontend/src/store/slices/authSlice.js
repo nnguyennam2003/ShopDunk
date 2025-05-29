@@ -11,6 +11,15 @@ export const login = createAsyncThunk("auth/login", async (userData, { rejectWit
     }
 })
 
+export const register = createAsyncThunk("auth/register", async (userData, { rejectWithValue }) => {
+    try {
+        const response = await instance.post('/auth/register', userData)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
 export const getMe = createAsyncThunk("auth/getMe", async (_, { rejectWithValue }) => {
     try {
         const res = await instance.get("user/me", {
@@ -57,6 +66,24 @@ const authSlice = createSlice({
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload.message || "Login failed";
+            })
+            .addCase(register.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.user = action.payload.user; // backend trả về { user: {...}, accessToken: ..., message: ... }
+                state.isLoading = false;
+                toast.success("Register successful", {
+                    position: 'bottom-right',
+                });
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload?.message || "Register failed";
+                toast.error(state.error, {
+                    position: 'bottom-right',
+                });
             })
             .addCase(getMe.pending, (state) => {
                 state.isLoading = true;

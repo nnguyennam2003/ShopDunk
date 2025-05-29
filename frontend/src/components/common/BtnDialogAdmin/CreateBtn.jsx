@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from 'lucide-react';
 
-export default function CreateBtn({ title = "Create", description = "", children }) {
+export default function CreateBtn({ title, description = "", children, open, onOpenChange }) {
   return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={onOpenChange}>
           <DialogTrigger asChild>
               <Button variant="outline">
                   <Plus />

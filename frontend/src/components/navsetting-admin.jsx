@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useDispatch } from 'react-redux'
 import { logout } from '@/store/slices/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function NavAdminSetting() {
     const user = {
@@ -94,10 +94,12 @@ export default function NavAdminSetting() {
                                 <UserCircleIcon />
                                 Account
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Home />
-                                Home
-                            </DropdownMenuItem>
+                            <Link to={'/'}>
+                                <DropdownMenuItem>
+                                    <Home />
+                                    Home
+                                </DropdownMenuItem>
+                            </Link>
                             <DropdownMenuItem>
                                 <BellIcon />
                                 Notifications
