@@ -7,8 +7,8 @@ export const generateAccessToken = (userId, role, res) => {
 
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',  // bật secure trên prod
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 1 * 24 * 60 * 60 * 1000 // 1 day
     });
 
@@ -23,8 +23,8 @@ export const generateRefreshToken = (userId, role, res) => {
 
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',  // bật secure trên prod
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 

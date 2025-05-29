@@ -12,8 +12,15 @@ import categoryRouter from './routes/category.route.js';
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.FRONTEND_URL_PROD,
+    'http://localhost:5173',
+    'http://localhost:5137'
+].filter(Boolean);
+
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL_PROD, 'http://localhost:5137'],
+    origin: allowedOrigins,
     credentials: true,
 }));
 
