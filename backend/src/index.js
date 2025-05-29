@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-config(); 
+config();
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, 'http://localhost:5137'],
+    origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL_PROD, 'http://localhost:5137'],
     credentials: true,
 }));
 
