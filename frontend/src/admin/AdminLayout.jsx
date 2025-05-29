@@ -11,8 +11,8 @@ export default function AdminLayout() {
         <>
             <SidebarProvider>
                 <AppSidebar />
-                <main>
-                    <SidebarTrigger />
+                <main className='flex-1 flex flex-col overflow-hidden px-5 py-4'>
+                    <SidebarTrigger className='-ml-1.5'/>
                     <Outlet />
                 </main>
 

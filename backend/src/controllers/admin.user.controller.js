@@ -7,8 +7,7 @@ export const createNewUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        const result = await createUserFromDB(email, phone, fullName, gender, birthday, hashedPassword, role);
-        const user = await getUserByIdFromDB(result.insertId)
+        const user = await createUserFromDB(email, phone, fullName, gender, birthday, hashedPassword, role);
         delete user.password;
         res.status(201).json({ message: 'User created successfully', user });
     } catch (error) {

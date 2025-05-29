@@ -5,15 +5,14 @@ config();
 
 const { Pool } = pkg;
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const db = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
-    ssl: {
-        rejectUnauthorized: false, // cần thiết khi dùng Neon
-    }
+    ssl: isProduction ? { rejectUnauthorized: false } : false
 });
-
 export default db;

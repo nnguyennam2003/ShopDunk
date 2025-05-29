@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import LoadingBtn from "@/components/common/LoadingBtn/LoadingBtn";
+import LoadingBtn from "@/components/common/Loading/LoadingBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/slices/authSlice";
 
@@ -17,7 +17,7 @@ export function LoginForm({ className, ...props }) {
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  
+
   useEffect(() => {
     if (user) {
       if (user.role === "admin") {
@@ -26,7 +26,7 @@ export function LoginForm({ className, ...props }) {
         navigate("/")
       }
     }
-    
+
   }, [user, navigate])
 
   const handleSubmit = (e) => {

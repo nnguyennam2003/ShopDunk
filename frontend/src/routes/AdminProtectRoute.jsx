@@ -1,6 +1,6 @@
-import LoadingBtn from "@/components/common/LoadingBtn/LoadingBtn"
+import LoadingBtn from "@/components/common/Loading/LoadingBtn"
 import { useSelector } from "react-redux"
-import { Navigate, Outlet } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 export default function AdminProtectedRoute({ children }) {
     const { user, isFetched } = useSelector((state) => state.auth)
