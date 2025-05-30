@@ -31,7 +31,7 @@ export function LoginForm({ className, ...props }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle login logic here
+
     dispatch(login({ email, password }))
   }
 

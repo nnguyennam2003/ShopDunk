@@ -1,12 +1,21 @@
-import { Button } from '@/components/ui/button'
 import React from 'react'
 
 export default function Home() {
     return (
-        <div>
-            <div className="flex flex-col items-center justify-center min-h-svh">
-                <Button>Click me</Button>
-            </div>
-        </div>
+        <>
+            <section>
+                <h1>
+                    Cửa Hàng. Cách tốt nhất để mua sản phẩm bạn thích.
+                </h1>
+            </section>
+
+            <section>
+                Banner
+            </section>
+
+            <section>
+                Products
+            </section>
+        </>
     )
 }

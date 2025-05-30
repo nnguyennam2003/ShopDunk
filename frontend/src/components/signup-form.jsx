@@ -34,9 +34,8 @@ export function SignUpForm({
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Handle login logic here
+
         dispatch(register({ email, phone, fullName, password }))
-        console.log({ email, phone, fullName, password });
     }
 
     return (

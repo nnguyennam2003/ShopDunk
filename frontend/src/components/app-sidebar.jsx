@@ -3,7 +3,6 @@ import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGrou
 import { LayoutDashboard, LayoutGrid, Settings, Package2, User } from "lucide-react"
 import { Link } from "react-router-dom"
 
-// Menu items.
 const items = [
     {
         title: "Dashboard",

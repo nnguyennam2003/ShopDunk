@@ -72,7 +72,7 @@ const authSlice = createSlice({
                 state.error = null;
             })
             .addCase(register.fulfilled, (state, action) => {
-                state.user = action.payload.user; // backend trả về { user: {...}, accessToken: ..., message: ... }
+                state.user = action.payload.user;
                 state.isLoading = false;
                 toast.success("Register successful", {
                     position: 'bottom-right',

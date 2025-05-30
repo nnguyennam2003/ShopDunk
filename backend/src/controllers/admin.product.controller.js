@@ -7,11 +7,9 @@ export const createNewProduct = async (req, res) => {
         const { name, description, price, price_sale, color, storage, category_id } = req.body;
         const files = req.files;
 
-        // 1. Tạo sản phẩm
         const result = await createProductFromDB(name, description, price, price_sale, color, storage, category_id);
         const productId = result.insertId;
 
-        // 2. Upload từng ảnh lên Cloudinary và lưu URL
         for (let file of files) {
             const uploadResult = await new Promise((resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
@@ -24,7 +22,6 @@ export const createNewProduct = async (req, res) => {
                 stream.end(file.buffer);
             });
 
-            // 3. Lưu URL ảnh vào database
             await db.query(
                 `INSERT INTO product_images (product_id, image_url) VALUES (?, ?)`,
                 [productId, uploadResult.secure_url]

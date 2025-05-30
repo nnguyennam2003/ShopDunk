@@ -1,6 +1,6 @@
 import db from '../config/db.js';
 
-// Tạo sản phẩm
+// Create a new category
 export const createProductFromDB = async (name, description, price, price_sale, color, storage, category_id) => {
     const result = await db.query(
         `INSERT INTO products (name, description, price, price_sale, color, storage, category_id)
@@ -10,7 +10,7 @@ export const createProductFromDB = async (name, description, price, price_sale, 
     return result.rows[0];
 };
 
-// Lấy sản phẩm theo category name
+// Get products by category name
 export const getProductsByCategoryFromDB = async (categoryName) => {
     const result = await db.query(
         `SELECT p.*, (
@@ -27,7 +27,7 @@ export const getProductsByCategoryFromDB = async (categoryName) => {
     return result.rows;
 };
 
-// Lấy toàn bộ sản phẩm
+// Get all products
 export const getAllProductsFromDB = async () => {
     const result = await db.query(
         `SELECT p.*, (
@@ -41,7 +41,7 @@ export const getAllProductsFromDB = async () => {
     return result.rows;
 };
 
-// Lấy sản phẩm theo ID
+// Get products by ID
 export const getProductByIdFromDB = async (productId) => {
     const productResult = await db.query(
         `SELECT * FROM products WHERE id = $1`,
@@ -61,7 +61,7 @@ export const getProductByIdFromDB = async (productId) => {
     return product;
 };
 
-// Xoá sản phẩm
+// Delete product by ID
 export const deleteProductByIdFromDB = async (productId) => {
     await db.query(
         `DELETE FROM product_images WHERE product_id = $1`,

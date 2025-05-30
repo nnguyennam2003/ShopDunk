@@ -12,6 +12,9 @@ import { Toaster } from "sonner"
 import UserManage from "@/admin/UserManage"
 import ProductManage from "@/admin/ProductManage"
 import CategoryManage from "@/admin/CategoryManage"
+import Header from "@/layout/Header"
+import MainLayout from "@/layout/MainLayout"
+import AuthLayout from "@/layout/AuthLayout"
 
 function App() {
   const dispatch = useDispatch()
@@ -23,9 +26,14 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
 
         {/* Admin layout routes */}
         <Route

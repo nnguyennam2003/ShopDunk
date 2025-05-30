@@ -183,7 +183,6 @@ export default function UserManage() {
     console.log("Updated user data:", user);
   }
   const handleDelete = async (userId) => {
-    // Logic to handle deleting a user
     try {
       await dispatch(deleteUser(userId)).unwrap();
       toast.success("User deleted successfully!");
