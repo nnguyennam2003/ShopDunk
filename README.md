@@ -4,13 +4,21 @@ A modern full-stack e-commerce website for selling Apple products, built with Re
 This project features a responsive UI, secure authentication, product filtering, and online payment integration.
 
 ---
+## 🔗 Live Demo
+
+- 🖥️ Link: [apple-shop.vercel.app]([https://apple-shop.vercel.app](https://shop-dunk-zeta.vercel.app/))
+
+## 🗂️ Entity Relationship Diagram (ERD)
+
+![ERD Diagram](https://github.com/user-attachments/assets/2a0f274c-3d36-4fe3-839f-1bbddeb460f1)
+
 
 ## 🛠 Tech Stack
 
 ### Frontend
 - **React** (SPA)
 - **Redux** (state management)
-- **Tailwind CSS** + **shadcn/ui** (UI & design system)
+- **Tailwind CSS** + **Shadcn/ui** (UI & design system)
 - **Responsive design** for all devices
 
 ### Backend
@@ -31,7 +39,7 @@ This project features a responsive UI, secure authentication, product filtering,
 ## ✅ Features
 
 ### 🔐 Authentication
-- Login with email or phone number + password
+- Login with email + password
 - Sign up with email, phone number, full name, password
 - Logout securely
 - *(Nice to have)* Login with Google or Facebook
@@ -72,17 +80,6 @@ This project features a responsive UI, secure authentication, product filtering,
 This project is in active development.  
 Upcoming features include social login, product filters, and real-time chat support.
 
----
-
-## 📸 Screenshots
-*Coming soon...*
-
----
-
-## 🔗 Demo
-*Deployed soon on Vercel & Render*
-
----
 
 ## 📬 Contact
 Feel free to open an issue or connect via email for feedback or collaboration.
