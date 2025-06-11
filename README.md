@@ -6,7 +6,7 @@ This project features a responsive UI, secure authentication, product filtering,
 ---
 ## 🔗 Live Demo
 
-- 🖥️ Link: [apple-shop.vercel.app]([https://apple-shop.vercel.app](https://shop-dunk-zeta.vercel.app/))
+- 🖥️ Link: [apple-shop.vercel.app](https://shop-dunk-zeta.vercel.app/)
 
 ## 🗂️ Entity Relationship Diagram (ERD)
 
