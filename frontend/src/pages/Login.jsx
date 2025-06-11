@@ -3,7 +3,9 @@ import { LoginForm } from "@/components/login-form"
 import appleLogo from "../assets/images/Apple_logo_black.svg"
 import loginImage from "../assets/images/login_image.avif"
 import { Link } from 'react-router-dom'
+
 export default function Login() {
+
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">

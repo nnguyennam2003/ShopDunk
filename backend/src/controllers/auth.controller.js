@@ -1,10 +1,10 @@
-import { generateAccessToken, generateRefreshToken } from "../config/utils.js";
-import { createUserFromDB, getUserByEmail } from "../models/user.model.js";
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { generateAccessToken, generateRefreshToken } from "../config/utils.js"
+import { createUserFromDB, getUserByEmail } from "../models/user.model.js"
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 export const signup = async (req, res) => {
-    const { email, phone, fullName, gender, birthday, password } = req.body;
+    const { email, phone, fullName, gender, birthday, password } = req.body
     if (!fullName || !email || !password) {
         return res.status(400).json({ message: "All fields are required" })
     }
@@ -13,7 +13,7 @@ export const signup = async (req, res) => {
     }
 
     try {
-        const existingUser = await getUserByEmail(email);
+        const existingUser = await getUserByEmail(email)
         if (existingUser) {
             return res.status(400).json({ message: "Email already exists" })
         }
@@ -21,12 +21,12 @@ export const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        const result = await createUserFromDB(email, phone, fullName, gender, birthday, hashedPassword);
+        const result = await createUserFromDB(email, phone, fullName, gender, birthday, hashedPassword)
 
-        const userId = result.id;
+        const userId = result.id
 
-        const accessToken = generateAccessToken(userId, "user", res);
-        generateRefreshToken(userId, "user", res);
+        const accessToken = generateAccessToken(userId, "user", res)
+        generateRefreshToken(userId, "user", res)
 
         res.status(201).json({
             message: 'User registered successfully',
@@ -35,18 +35,18 @@ export const signup = async (req, res) => {
         })
 
     } catch (err) {
-        res.status(500).json({ message: 'Registration failed.', error: err.message });
+        res.status(500).json({ message: 'Registration failed.', error: err.message })
     }
 }
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body
     if (!email || !password) {
         return res.status(400).json({ message: "All fields are required" })
     }
 
     try {
-        const user = await getUserByEmail(email);
+        const user = await getUserByEmail(email)
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" })
         }
@@ -56,7 +56,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" })
         }
 
-        const accessToken = generateAccessToken(user.id, user.role, res);
+        const accessToken = generateAccessToken(user.id, user.role, res)
         generateRefreshToken(user.id, user.role, res)
 
         res.status(200).json({
@@ -66,7 +66,7 @@ export const login = async (req, res) => {
         })
 
     } catch (err) {
-        res.status(500).json({ message: 'Login failed.', error: err.message });
+        res.status(500).json({ message: 'Login failed.', error: err.message })
     }
 }
 
@@ -75,33 +75,33 @@ export const logout = (req, res) => {
         httpOnly: true,
         sameSite: 'strict',
         secure: process.env.NODE_ENV !== 'development',
-    });
+    })
 
     res.clearCookie('refreshToken', {
         httpOnly: true,
         sameSite: 'strict',
         secure: process.env.NODE_ENV !== 'development',
-    });
+    })
 
-    res.status(200).json({ message: 'Logged out successfully' });
-};
+    res.status(200).json({ message: 'Logged out successfully' })
+}
 
 export const refreshAccessToken = (req, res) => {
-    const token = req.cookies.refreshToken;
+    const token = req.cookies.refreshToken
 
     if (!token) {
-        return res.status(401).json({ message: 'Refresh token not found' });
+        return res.status(401).json({ message: 'Refresh token not found' })
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
-        const { userId, role } = decoded;
+        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
+        const { userId, role } = decoded
 
-        const accessToken = generateAccessToken(userId, role, res);
+        const accessToken = generateAccessToken(userId, role, res)
 
-        res.status(200).json({ accessToken });
+        res.status(200).json({ accessToken })
     } catch (err) {
-        console.error('Verify refresh token error:', err);
-        res.status(403).json({ message: 'Invalid or expired refresh token' });
+        console.error('Verify refresh token error:', err)
+        res.status(403).json({ message: 'Invalid or expired refresh token' })
     }
-};
+}

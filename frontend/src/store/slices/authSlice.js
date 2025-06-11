@@ -2,6 +2,7 @@ import instance from "@/lib/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
+
 export const login = createAsyncThunk("auth/login", async (userData, { rejectWithValue }) => {
     try {
         const response = await instance.post('/auth/login', userData)

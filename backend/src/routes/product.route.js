@@ -1,8 +1,8 @@
-import express from 'express';
-import { isAdmin, protect } from '../middleware/auth.middleware.js';
-import { createNewProduct, deleteProduct } from '../controllers/admin.product.controller.js';
-import { getProductById, getProductsByCategory } from '../controllers/product.controller.js';
-import upload from '../middleware/upload.middleware.js';
+import express from 'express'
+import { isAdmin, protect } from '../middleware/auth.middleware.js'
+import { createNewProduct, deleteProduct } from '../controllers/admin.product.controller.js'
+import { getProductById, getProductsByCategory, getRelatedProductsByProductId } from '../controllers/product.controller.js'
+import upload from '../middleware/upload.middleware.js'
 
 const router = express.Router()
 
@@ -11,4 +11,6 @@ router.delete('/delete-product/:id', protect, isAdmin, deleteProduct )
 
 router.get('/', getProductsByCategory)
 router.get('/:id', getProductById)
-export default router;
+router.get('/:id/related', getRelatedProductsByProductId)
+
+export default router

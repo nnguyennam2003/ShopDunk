@@ -31,3 +31,4 @@ dist-ssr
 .vscode/
 
 TableDB.sql
+db.sql

@@ -9,11 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button'
 import { UserCog } from 'lucide-react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '@/store/slices/authSlice'
 
 export default function MenuProfile() {
+    const  { user } = useSelector((state) => state.auth)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -21,17 +23,22 @@ export default function MenuProfile() {
         dispatch(logout())
         navigate("/login")
     }
+    
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="hidden md:flex"><Button variant='outline'><UserCog /></Button></DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuTrigger asChild className="hidden md:flex"><Button variant='outline'><UserCog /></Button></DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Tài khoản của tôi</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/profile')}>Hồ sơ</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/orders')}>Đơn hàng</DropdownMenuItem>
+                { user.role === 'admin' && (
+                    <DropdownMenuItem onClick={() => navigate('/admin')}>
+                        Admin Dashboard
+                    </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>Đăng xuất</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

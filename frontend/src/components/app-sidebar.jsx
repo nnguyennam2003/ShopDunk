@@ -1,6 +1,6 @@
 import NavAdminSetting from "@/components/navsetting-admin"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
-import { LayoutDashboard, LayoutGrid, Settings, Package2, User } from "lucide-react"
+import { LayoutDashboard, LayoutGrid,Paintbrush, Settings, Package2, User } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const items = [
@@ -23,6 +23,11 @@ const items = [
         title: "Categories",
         url: "/admin/categories",
         icon: LayoutGrid,
+    },
+    {
+        title: "Colors",
+        url: "/admin/colors",
+        icon: Paintbrush,
     },
     {
         title: "Settings",

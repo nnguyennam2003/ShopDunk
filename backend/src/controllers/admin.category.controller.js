@@ -1,4 +1,4 @@
-import { createCategoryFromDB, getAllCategoriesFromDB } from "../models/category.model.js";
+import { createCategoryFromDB, getAllCategoriesFromDB, deleteCategoryFromDB } from "../models/category.model.js"
 
 export const createNewCategory = async (req, res) => {
     const { name } = req.body
@@ -19,5 +19,18 @@ export const getAllCategories = async (req, res) => {
         res.status(200).json(categories)
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch categories', error: error.message })
+    }
+}
+
+export const deleteCategory = async (req, res) => {
+    const { id } = req.params
+    try {
+        const result = await deleteCategoryFromDB(id)
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Category not found' })
+        }
+        res.status(200).json({ message: 'Category deleted successfully' })
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete category', error: error.message })
     }
 }

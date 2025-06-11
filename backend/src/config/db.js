@@ -1,11 +1,11 @@
-import pkg from 'pg';
-import { config } from 'dotenv';
+import pkg from 'pg'
+import { config } from 'dotenv'
 
-config();
+config()
 
-const { Pool } = pkg;
+const { Pool } = pkg
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 const db = new Pool({
     host: process.env.DB_HOST,
@@ -13,6 +13,8 @@ const db = new Pool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
-    ssl: isProduction ? { rejectUnauthorized: false } : false
-});
-export default db;
+    ssl: {
+        rejectUnauthorized: false, // ✅ Bắt buộc với Neon
+    },
+})
+export default db

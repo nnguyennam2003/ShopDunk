@@ -1,14 +1,18 @@
-import { TableManageAdmin } from '@/components/common/TableManageAdmin/TableManageAdmin'
-import { createUser, deleteUser, getUsers } from '@/store/slices/userSlice';
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import EditBtn from '@/components/common/BtnDialogAdmin/EditBtn';
-import DeleteBtn from '@/components/common/BtnDialogAdmin/DeleteBtn';
-import { DialogFooter } from '@/components/ui/dialog';
-import CreateBtn from '@/components/common/BtnDialogAdmin/CreateBtn';
-import { Label } from '@/components/ui/label';
+
+import { useDispatch, useSelector } from 'react-redux'
+import { createUser, deleteUser, getUsers } from '@/store/slices/userSlice'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { DialogFooter } from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+
+import CreateBtn from '@/components/common/BtnDialogAdmin/CreateBtn'
+import DeleteBtn from '@/components/common/BtnDialogAdmin/DeleteBtn'
+import EditBtn from '@/components/common/BtnDialogAdmin/EditBtn'
+import { TableManageAdmin } from '@/components/common/TableManageAdmin/TableManageAdmin'
+
 import {
   Select,
   SelectContent,
@@ -16,8 +20,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { formatDateToDMY } from '@/helpers/FormatDataNumber';
-import { toast } from 'sonner';
+import { formatDateToDMY } from '@/helpers/FormatDataNumber'
+import { toast } from 'sonner'
 
 
 export default function UserManage() {
@@ -113,8 +117,8 @@ export default function UserManage() {
                 <Button
                   variant="destructive"
                   onClick={async () => {
-                    await handleDelete(row.id);
-                    close();
+                    await handleDelete(row.id)
+                    close()
                   }}
                 >
                   Delete
@@ -126,17 +130,17 @@ export default function UserManage() {
         </div>
       ),
     },
-  ];
+  ]
 
-  const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("male");
-  const [birthday, setBirthday] = useState("");
-  const [role, setRole] = useState("user");
+  const [email, setEmail] = useState("")
+  const [fullName, setFullName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [password, setPassword] = useState("")
+  const [gender, setGender] = useState("male")
+  const [birthday, setBirthday] = useState("")
+  const [role, setRole] = useState("user")
 
-  const [openCreate, setOpenCreate] = useState(false);
+  const [openCreate, setOpenCreate] = useState(false)
   const dispatch = useDispatch()
 
   const { users, isLoading } = useSelector((state) => state.user)
@@ -146,7 +150,7 @@ export default function UserManage() {
   }, [dispatch])
 
   const handleCreate = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const newUser = {
       fullName: fullName,
@@ -156,38 +160,35 @@ export default function UserManage() {
       gender: gender,
       birthday: birthday,
       role: role,
-    };
+    }
 
     try {
-      await dispatch(createUser(newUser)).unwrap();
-      toast.success("User created successfully!");
+      await dispatch(createUser(newUser)).unwrap()
+      toast.success("User created successfully!")
 
-      setFullName("");
-      setEmail("");
-      setPhone("");
-      setPassword("");
-      setGender("male");
-      setBirthday("");
-      setRole("user");
+      setFullName("")
+      setEmail("")
+      setPhone("")
+      setPassword("")
+      setGender("male")
+      setBirthday("")
+      setRole("user")
 
-      setOpenCreate(false);
+      setOpenCreate(false)
     } catch (error) {
-      toast.error(error.message || "Failed to create user");
+      toast.error(error.message || "Failed to create user")
     }
   }
-  const handleEdit = (e, user) => {
-    e.preventDefault();
-
-
-
-    console.log("Updated user data:", user);
+  const handleEdit = (e) => {
+    e.preventDefault()
   }
+  
   const handleDelete = async (userId) => {
     try {
-      await dispatch(deleteUser(userId)).unwrap();
-      toast.success("User deleted successfully!");
+      await dispatch(deleteUser(userId)).unwrap()
+      toast.success("User deleted successfully!")
     } catch (error) {
-      toast.error(error.message || "Failed to delete user");
+      toast.error(error.message || "Failed to delete user")
     }
   }
 
