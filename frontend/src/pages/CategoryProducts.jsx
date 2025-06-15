@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import ProductGrid from "@/components/common/Product/ProductGrid" // hoặc component bạn dùng để hiển thị sản phẩm
+import ProductGrid from "@/components/common/Product/ProductGrid"
 import axios from "axios"
 import { Skeleton } from "@/components/ui/skeleton"
+import { titleCategorySwitch } from "@/helpers/SwitchDataEnum"
 
 export default function CategoryProducts() {
     const { categoryName } = useParams()
+    
+    useEffect(() => {
+        document.title = `${titleCategorySwitch(categoryName)}`
+    }, [categoryName])
+
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
 

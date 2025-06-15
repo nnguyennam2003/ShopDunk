@@ -15,6 +15,10 @@ import { useNavigate } from 'react-router-dom'
 import { formatDateTimeVN, formatVND } from '@/helpers/FormatDataNumber'
 
 export default function Orders() {
+  useEffect(() => {
+    document.title = 'Đơn hàng của bạn'
+  }, [])
+
   const { orders } = useSelector(state => state.order)
 
   const dispatch = useDispatch()

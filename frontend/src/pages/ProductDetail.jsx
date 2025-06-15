@@ -6,12 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import ProductGrid from '@/components/common/Product/ProductGrid';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/store/slices/cartSlice';
 import { formatVND } from '@/helpers/FormatDataNumber';
 import { Minus, Plus } from 'lucide-react';
 import instance from '@/lib/axios';
 import { Skeleton } from '@/components/ui/skeleton';
+import LoadingBtn from '@/components/common/Loading/LoadingBtn';
 
 export default function ProductDetail() {
     const { id } = useParams()
@@ -22,6 +23,7 @@ export default function ProductDetail() {
     const [quantity, setQuantity] = useState(1);
     const [relatedProducts, setRelatedProducts] = useState([])
 
+    const { isLoading } = useSelector((state) => state.cart);
     const dispatch = useDispatch()
 
     const getProductById = async () => {
@@ -53,6 +55,10 @@ export default function ProductDetail() {
         if (product) {
             getRelatedProducts();
         }
+    }, [product])
+
+    useEffect(() => {
+        document.title = `${product ? product.name : 'Chi tiết sản phẩm'}`;
     }, [product])
 
 
@@ -174,7 +180,9 @@ export default function ProductDetail() {
                     </div>
 
                     <div className='mt-10 w-full'>
-                        <Button variant='outline' className='w-full' disabled={!selectedColor || !selectedStorage} onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
+                        <Button variant='outline' className='w-full' disabled={!selectedColor || !selectedStorage || isLoading} onClick={handleAddToCart}>
+                            {isLoading ? <LoadingBtn /> : 'Thêm vào giỏ hàng'}
+                        </Button>
                     </div>
                 </div>
             </div>

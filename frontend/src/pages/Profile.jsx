@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useDispatch, useSelector } from 'react-redux'
 import { formatDateToDMY } from '@/helpers/FormatDataNumber'
@@ -10,7 +10,10 @@ import RightProfile from '@/components/common/Profile/RightProfile'
 import { enumGenderSwitch } from '@/helpers/SwitchDataEnum'
 
 export default function Profile() {
-  console.log('render profile')
+  useEffect(() => {
+    document.title = "Hồ sơ của tôi"
+  }, [])
+
   const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -26,7 +29,7 @@ export default function Profile() {
         <h1 className='font-bold text-3xl'>Hồ sơ</h1>
         <div className='w-full flex justify-center'>
           <Avatar className='md:w-44 md:h-44 w-32 h-32 mt-7'>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="https://freesvg.org/img/abstract-user-flat-3.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>

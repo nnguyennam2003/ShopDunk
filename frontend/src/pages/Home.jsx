@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { bannerHome, hotProducts } from '@/helpers/FixedData';
 import { CreditCard, MonitorSmartphone, ShoppingCart, Truck } from 'lucide-react';
 
 export default function Home() {
+    useEffect(() => {
+        document.title = "Apple - Trang chủ"
+    }, [])
+
     return (
         <>
             <section>

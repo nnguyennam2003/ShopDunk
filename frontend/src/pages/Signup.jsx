@@ -1,10 +1,14 @@
 import { SignUpForm } from '@/components/signup-form'
-import React from 'react'
+import React, { useEffect } from 'react'
 import appleLogo from "../assets/images/Apple_logo_black.svg"
 import signUpImage from "../assets/images/sigup_image.avif"
 import { Link } from 'react-router-dom'
 
 export default function Signup() {
+    useEffect(() => {
+        document.title = "Đăng ký - Apple ShopDunk"
+    }, [])
+
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -26,7 +30,7 @@ export default function Signup() {
                 <img
                     src={signUpImage}
                     alt="Image"
-                    className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                    className="absolute inset-0 h-full w-full object-cover"
                 />
             </div>
         </div>

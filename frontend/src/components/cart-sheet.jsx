@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Sheet,
     SheetContent,
@@ -18,11 +18,19 @@ export default function CartSheet() {
     const { carts } = useSelector(state => state.cart)
     const dispatch = useDispatch()
 
+    const [open, setOpen] = useState(false)
+
     const navigate = useNavigate()
 
     const handleRemoveFromCart = (idCartItem) => {
         if (idCartItem) dispatch(removeFromCart(idCartItem))
     }
+
+    const handleCheckout = () => {
+        setOpen(false)
+        setTimeout(() => navigate('/checkout'), 200)
+    }
+
 
     const total = (Array.isArray(carts) ? carts : []).reduce(
         (sum, item) => sum + Number(item.price) * Number(item.quantity || 1),
@@ -30,7 +38,7 @@ export default function CartSheet() {
     );
 
     return (
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="hidden md:flex"><Button variant='outline'><ShoppingBag />{Array.isArray(carts) ? carts.length : 0}</Button></SheetTrigger>
             <SheetContent className="!w-[40%] !max-w-full">
                 <SheetTitle className='p-3'>ShopDunk | Giỏ hàng</SheetTitle>
@@ -75,7 +83,7 @@ export default function CartSheet() {
                                 <p className="text-sm text-gray-500">Chi tiết thuế và phí vận chuyển ở bước thanh toán</p>
                             </div>
                             <div className='flex justify-end'>
-                                <Button variant={'outline'} onClick={() => navigate('/checkout')} className='w-fit'>Thanh toán<CreditCard /></Button>
+                                <Button variant={'outline'} onClick={handleCheckout} className='w-fit'>Thanh toán<CreditCard /></Button>
                             </div>
                         </SheetFooter>
                     ) : null

@@ -67,7 +67,7 @@ export default function RightProfile() {
                         <Input defaultValue={enumGenderSwitch(user.gender)} />
                     </div>
                     <div className='flex justify-end'>
-                        <Button className='mt-5 w-48' variant='default'>Update</Button>
+                        <Button className='mt-5 w-48' variant='default'>Cập nhật thông tin</Button>
                     </div>
                 </form>
             </TabsContent>

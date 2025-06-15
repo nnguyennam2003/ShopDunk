@@ -24,6 +24,11 @@ export default function OrderDetail() {
     useEffect(() => {
         getOrderDetail()
     }, [id])
+
+    useEffect(() => {
+        document.title = `Chi tiết đơn hàng #${id}`
+    }, [id])
+    
     return (
         <div>
             <h1 className='text-center text-2xl font-bold mt-10'>Chi tiết đơn hàng #{orderDetail?.order?.id}</h1>

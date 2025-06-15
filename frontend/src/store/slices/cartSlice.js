@@ -60,7 +60,9 @@ const cartSlice = createSlice({
                 state.carts = action.payload;
                 state.isLoading = false;
                 state.error = null;
-                toast.success("Product added to cart successfully!");
+                toast.success("Sản phân đã được thêm vào giỏ hàng!", {
+                    position: 'bottom-right',
+                });
             })
             .addCase(addToCart.rejected, (state, action) => {
                 state.isLoading = false;

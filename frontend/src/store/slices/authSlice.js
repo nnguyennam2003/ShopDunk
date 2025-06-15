@@ -60,13 +60,16 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.user = action.payload.user;
                 state.isLoading = false;
-                toast.success("Login successful", {
-                    position: 'bottom-right',
+                toast.success("Đăng nhập thành công", {
+                    position: 'bottom-left',
                   })
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload.message || "Login failed";
+                state.error = action.payload.message || "Đăng nhập thất bại";
+                toast.error("Email hoặc password không đúng!", {
+                    position: 'bottom-left',
+                })
             })
             .addCase(register.pending, (state) => {
                 state.isLoading = true;
@@ -75,15 +78,15 @@ const authSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.user = action.payload.user;
                 state.isLoading = false;
-                toast.success("Register successful", {
-                    position: 'bottom-right',
+                toast.success("Tài khoản của bạn tạo thanh công", {
+                    position: 'bottom-left',
                 });
             })
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload?.message || "Register failed";
+                state.error = action.payload?.message || "Tạo tài khoản thất bại";
                 toast.error(state.error, {
-                    position: 'bottom-right',
+                    position: 'bottom-left',
                 });
             })
             .addCase(getMe.pending, (state) => {
@@ -105,12 +108,12 @@ const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
                 state.isFetched = true;
-                toast.success("Logout successful", {
-                    position: 'bottom-right',
+                toast.success("Đã đăng xuất", {
+                    position: 'bottom-left',
                 });
             })
             .addCase(logout.rejected, (state, action) => {
-                state.error = action.payload.message || "Logout failed";
+                state.error = action.payload.message || "Đăng xuất thất bại";
             });
     },
 })

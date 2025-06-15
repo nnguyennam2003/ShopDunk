@@ -1,68 +1,106 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import LoadingBtn from "@/components/common/Loading/LoadingBtn";
+
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/slices/authSlice";
 
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import LoadingBtn from "@/components/common/Loading/LoadingBtn";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/validation/schema";
+
 export function LoginForm({ className, ...props }) {
-  const { isLoading } = useSelector((state) => state.auth)
-
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
+  const { isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, touchedFields },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    mode: "onBlur",
+  });
 
-    dispatch(login({ email, password }))
-  }
+  const onSubmit = (data) => {
+    dispatch(login(data));
+  };
 
   return (
-    (<form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn("flex flex-col gap-6", className)}
+      {...props}
+    >
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Đăng nhập</h1>
         <p className="text-muted-foreground text-sm text-balance">
           Nhập Email và mật khẩu để đăng nhập
         </p>
       </div>
+
       <div className="grid gap-6">
-        <div className="grid gap-3">
+        {/* Email */}
+        <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            {...register("email")}
+          />
+          {touchedFields.email && errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
         </div>
-        <div className="grid gap-3">
+
+        {/* Password */}
+        <div className="grid gap-2">
           <div className="flex items-center">
             <Label htmlFor="password">Mật khẩu</Label>
-            <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
+            {/* <a
+              href="#"
+              className="ml-auto text-sm underline-offset-4 hover:underline"
+            >
               Quên mật khẩu?
-            </a>
+            </a> */}
           </div>
-          <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            id="password"
+            type="password"
+            {...register("password")}
+          />
+          {touchedFields.password && errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
         </div>
-        <Button type="submit" className="w-full" onClick={handleSubmit} disabled={isLoading}>
+
+        <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? <LoadingBtn /> : "Đăng nhập"}
         </Button>
-        <div
-          className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+
+        <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
-            Hoặc dăng nhập với
+            Hoặc đăng nhập với
           </span>
         </div>
+
         <Button variant="outline" className="w-full">
-          Login with Google
+          Đăng nhập với Google
         </Button>
       </div>
+
       <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <Link to={'/signup'} className="underline underline-offset-4">
+        Bạn chưa có tài khoản?{" "}
+        <Link to={"/signup"} className="underline underline-offset-4">
           Đăng ký
         </Link>
       </div>
-    </form>)
+    </form>
   );
 }

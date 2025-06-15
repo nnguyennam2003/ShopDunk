@@ -17,6 +17,10 @@ import { getAddressDefault } from '@/services/address'
 import { checkoutOrder } from '@/services/checkout'
 
 export default function Checkout() {
+  useEffect(() => {
+    document.title = "Thanh toán"
+  }, [])
+
   const { carts } = useSelector(state => state.cart)
   const { user } = useSelector(state => state.auth)
   const [defaultAddress, setDefaultAddress] = useState(null);
@@ -151,7 +155,7 @@ export default function Checkout() {
       <Dialog open={showNoAddressDialog} onOpenChange={setShowNoAddressDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Bạn muốn thêm địa chỉ giao hàng mới</DialogTitle>
+            <DialogTitle>Bạn muốn thêm địa chỉ giao hàng mới?</DialogTitle>
           </DialogHeader>
           <div className="text-gray-700 mb-4">
             Vui lòng vào mục địa chỉ trong trang hồ sơ của bạn để thêm mới.

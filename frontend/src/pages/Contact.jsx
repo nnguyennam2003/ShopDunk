@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import bannerContact from '@/assets/images/banner-contact.jpg'
 export default function Contact() {
+    useEffect(() => {
+        document.title = "Liên hệ";
+    }, []);
+
     return (
         <div>
             <div className='w-full mt-2 rounded-2xl'>

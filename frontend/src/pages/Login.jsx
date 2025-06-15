@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LoginForm } from "@/components/login-form"
 import appleLogo from "../assets/images/Apple_logo_black.svg"
 import loginImage from "../assets/images/login_image.avif"
 import { Link } from 'react-router-dom'
 
 export default function Login() {
+    useEffect(() => {
+        document.title = "Đăng nhập - Apple ShopDunk"
+    }, [])
 
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
@@ -27,7 +30,7 @@ export default function Login() {
                 <img
                     src={loginImage}
                     alt="Image"
-                    className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                    className="absolute inset-0 h-full w-full object-cover"
                 />
             </div>
         </div>

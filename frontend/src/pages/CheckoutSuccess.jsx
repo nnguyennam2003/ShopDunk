@@ -5,6 +5,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // import { CheckLine } from 'lucide-react';
 
 export default function CheckoutSuccess() {
+    useEffect(() => {
+        document.title = "Đặt hàng thành công";
+    }, []);
+
     const location = useLocation();
     const navigate = useNavigate();
 
