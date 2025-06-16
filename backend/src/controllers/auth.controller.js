@@ -1,5 +1,5 @@
 
-import admin from "../config/firebaseAdmin.js"
+// import admin from "../config/firebaseAdmin.js"
 import { generateAccessToken, generateRefreshToken } from "../config/utils.js"
 import { createUserFromDB, getUserByEmail } from "../models/user.model.js"
 import bcrypt from 'bcryptjs'
@@ -109,41 +109,41 @@ export const refreshAccessToken = (req, res) => {
 }
 
 
-export const loginWithGoogle = async (req, res) => {
-    const { idToken } = req.body;
+// export const loginWithGoogle = async (req, res) => {
+//     const { idToken } = req.body;
 
-    if (!idToken) {
-        return res.status(400).json({ message: "Missing Google token" });
-    }
+//     if (!idToken) {
+//         return res.status(400).json({ message: "Missing Google token" });
+//     }
 
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        const { email, name, uid } = decodedToken;
+//     try {
+//         const decodedToken = await admin.auth().verifyIdToken(idToken);
+//         const { email, name, uid } = decodedToken;
 
-        let user = await getUserByEmail(email);
-        if (!user) {
-            const result = await createUserFromDB(email, null, name, null, null, null);
-            user = { ...result, role: 'user' };
-        }
+//         let user = await getUserByEmail(email);
+//         if (!user) {
+//             const result = await createUserFromDB(email, null, name, null, null, null);
+//             user = { ...result, role: 'user' };
+//         }
 
-        const accessToken = generateAccessToken(user.id, user.role, res);
-        generateRefreshToken(user.id, user.role, res);
+//         const accessToken = generateAccessToken(user.id, user.role, res);
+//         generateRefreshToken(user.id, user.role, res);
 
-        res.status(200).json({
-            message: 'Login with Google successful',
-            user: {
-                id: user.id,
-                email: user.email,
-                fullName: user.full_name,
-                phone: user.phone,
-                gender: user.gender,
-                birthday: user.birthday,
-                role: user.role,
-            },
-            accessToken
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(401).json({ message: "Invalid Google token", error: err.message });
-    }
-  };
+//         res.status(200).json({
+//             message: 'Login with Google successful',
+//             user: {
+//                 id: user.id,
+//                 email: user.email,
+//                 fullName: user.full_name,
+//                 phone: user.phone,
+//                 gender: user.gender,
+//                 birthday: user.birthday,
+//                 role: user.role,
+//             },
+//             accessToken
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(401).json({ message: "Invalid Google token", error: err.message });
+//     }
+//   };
