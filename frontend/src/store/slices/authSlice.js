@@ -1,7 +1,7 @@
 import instance from "@/lib/axios";
 import { auth } from "@/lib/firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { toast } from "sonner";
 
 
@@ -58,12 +58,10 @@ export const getMe = createAsyncThunk("auth/getMe", async (_, { rejectWithValue 
 export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
     try {
         await instance.post('/auth/logout', {}, { withCredentials: true });
-        // await signOut(auth);
-        // if (auth.currentUser === null) {
-        //     return true;
-        // } else {
-        //     throw new Error("Firebase sign out failed");
-        // }
+        if (auth.currentUser) {
+            await signOut(auth);
+        }
+        return true;
     } catch (error) {
         return rejectWithValue(error.response?.data || { message: error.message || "Đăng xuất thất bại" });
     }
