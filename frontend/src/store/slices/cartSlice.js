@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export const getListCart = createAsyncThunk("cart/getListCart", async (_, { rejectWithValue }) => {
     try {
         const response = await instance.get('/cart');
-        return response.data.items;
+        return response.data.carts;
     } catch (error) {
         return rejectWithValue(error?.response?.data || { message: "Something went wrong" });
     }

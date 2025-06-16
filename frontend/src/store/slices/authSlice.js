@@ -29,6 +29,7 @@ export const loginWithGoogle = createAsyncThunk(
             if (error.code === "auth/popup-closed-by-user") {
                 return rejectWithValue({ message: "Bạn đã đóng cửa sổ đăng nhập Google." });
             }
+            console.log(error);
             return rejectWithValue(error.response?.data || { message: "Đăng nhập Google thất bại" });
         }
     }
