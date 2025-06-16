@@ -27,7 +27,8 @@ dist-ssr
 *.sw?
 
 **/.env
-serviceAccountKey.json
+backend/src/config/serviceAccountKey.json
+
 .vscode/
 
 TableDB.sql
