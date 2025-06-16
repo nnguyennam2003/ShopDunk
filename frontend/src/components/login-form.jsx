@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/store/slices/authSlice";
+import { login, loginWithGoogle } from "@/store/slices/authSlice";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -13,10 +13,13 @@ import LoadingBtn from "@/components/common/Loading/LoadingBtn";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/validation/schema";
+import { useState } from "react";
 
 export function LoginForm({ className, ...props }) {
   const { isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const {
     register,
@@ -27,10 +30,18 @@ export function LoginForm({ className, ...props }) {
     mode: "onBlur",
   });
 
-  const onSubmit = (data) => {
-    dispatch(login(data));
+  const onSubmit = async (data) => {
+    await dispatch(login(data)).unwrap();
   };
 
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+    try {
+      await dispatch(loginWithGoogle()).unwrap();
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -90,7 +101,7 @@ export function LoginForm({ className, ...props }) {
           </span>
         </div>
 
-        <Button variant="outline" className="w-full">
+        <Button type="button" variant="outline" className="w-full" onClick={handleGoogleLogin} disabled={googleLoading}>
           Đăng nhập với Google
         </Button>
       </div>

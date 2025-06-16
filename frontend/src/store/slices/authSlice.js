@@ -1,5 +1,7 @@
 import instance from "@/lib/axios";
+import { auth } from "@/lib/firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { toast } from "sonner";
 
 
@@ -11,6 +13,26 @@ export const login = createAsyncThunk("auth/login", async (userData, { rejectWit
         return rejectWithValue(error.response.data)
     }
 })
+
+
+export const loginWithGoogle = createAsyncThunk(
+    "auth/loginWithGoogle",
+    async (_, { rejectWithValue }) => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken();
+
+            const response = await instance.post("/auth/google", { idToken });
+            return response.data;
+        } catch (error) {
+            if (error.code === "auth/popup-closed-by-user") {
+                return rejectWithValue({ message: "Bạn đã đóng cửa sổ đăng nhập Google." });
+            }
+            return rejectWithValue(error.response?.data || { message: "Đăng nhập Google thất bại" });
+        }
+    }
+);
 
 export const register = createAsyncThunk("auth/register", async (userData, { rejectWithValue }) => {
     try {
@@ -34,12 +56,15 @@ export const getMe = createAsyncThunk("auth/getMe", async (_, { rejectWithValue 
 
 export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
     try {
-        await instance.post('/auth/logout', {}, {
-            withCredentials: true
-        });
-        return true;
+        await instance.post('/auth/logout', {}, { withCredentials: true });
+        await signOut(auth);
+        if (auth.currentUser === null) {
+            return true;
+        } else {
+            throw new Error("Firebase sign out failed");
+        }
     } catch (error) {
-        return rejectWithValue(error.response.data);
+        return rejectWithValue(error.response?.data || { message: error.message || "Đăng xuất thất bại" });
     }
 });
 
@@ -62,7 +87,7 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 toast.success("Đăng nhập thành công", {
                     position: 'bottom-left',
-                  })
+                })
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
@@ -70,6 +95,20 @@ const authSlice = createSlice({
                 toast.error("Email hoặc password không đúng!", {
                     position: 'bottom-left',
                 })
+            })
+            .addCase(loginWithGoogle.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(loginWithGoogle.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload.user;
+                toast.success("Đăng nhập Google thành công", { position: 'bottom-left' });
+            })
+            .addCase(loginWithGoogle.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload?.message || "Đăng nhập Google thất bại";
+                toast.error(state.error, { position: 'bottom-left' });
             })
             .addCase(register.pending, (state) => {
                 state.isLoading = true;
