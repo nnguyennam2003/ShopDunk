@@ -58,12 +58,12 @@ export const getMe = createAsyncThunk("auth/getMe", async (_, { rejectWithValue 
 export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
     try {
         await instance.post('/auth/logout', {}, { withCredentials: true });
-        await signOut(auth);
-        if (auth.currentUser === null) {
-            return true;
-        } else {
-            throw new Error("Firebase sign out failed");
-        }
+        // await signOut(auth);
+        // if (auth.currentUser === null) {
+        //     return true;
+        // } else {
+        //     throw new Error("Firebase sign out failed");
+        // }
     } catch (error) {
         return rejectWithValue(error.response?.data || { message: error.message || "Đăng xuất thất bại" });
     }
