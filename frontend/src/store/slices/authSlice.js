@@ -1,7 +1,7 @@
 import instance from "@/lib/axios";
 import { auth } from "@/lib/firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { toast } from "sonner";
 
 
